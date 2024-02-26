@@ -32,12 +32,12 @@ public class LandingPage extends AbstractComponent {
     WebElement errorMessage;
 
     //Action Methods
-    public ProductCatalogue loginApplication(String email, String password){
+    public ProductCataloguePage loginApplication(String email, String password){
         userEmail.sendKeys(email);
         userPassword.sendKeys(password);
         loginBtn.click();
-        ProductCatalogue productCatalogue = new ProductCatalogue(driver);
-        return productCatalogue;
+        ProductCataloguePage productCataloguePage = new ProductCataloguePage(driver);
+        return productCataloguePage;
     }
 
     public String getErrorMessage(){

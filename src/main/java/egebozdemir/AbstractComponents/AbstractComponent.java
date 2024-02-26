@@ -1,6 +1,7 @@
 package egebozdemir.AbstractComponents;
 
 import egebozdemir.PageObjects.CartPage;
+import egebozdemir.PageObjects.OrdersPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -23,6 +24,11 @@ public class AbstractComponent {
     //Elements (common for all pages, reusable)
     @FindBy(css = "[routerlink*='cart']")
     WebElement cartIconHeader;
+    By cartIcon = By.cssSelector("[routerlink*='cart']");
+
+    @FindBy(css = "[routerlink*='myorders']")
+    WebElement ordersHeader;
+    By ordersIcon = By.cssSelector("[routerlink*='myorders']");
 
     //Action Methods (common for all pages, reusable)
     public void waitForElementToAppear(By findBy){
@@ -35,15 +41,28 @@ public class AbstractComponent {
         wait.until(ExpectedConditions.visibilityOf(findBy));
     }
 
+    public void waitForElementToClick(By findBy){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.elementToBeClickable(findBy));
+    }
+
     public void waitForElementToDisappear(WebElement element){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.invisibilityOf(element));
     }
 
     public CartPage goToCartPage(){
+        waitForElementToClick(cartIcon);
         cartIconHeader.click();
         CartPage cartPage = new CartPage(driver);
         return cartPage;
+    }
+
+    public OrdersPage goToOrdersPage(){
+        waitForElementToClick(ordersIcon);
+        ordersHeader.click();
+        OrdersPage ordersPage = new OrdersPage(driver);
+        return ordersPage;
     }
 
 }

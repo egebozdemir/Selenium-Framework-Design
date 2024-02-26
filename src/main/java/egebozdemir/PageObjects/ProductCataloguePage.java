@@ -10,11 +10,11 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.List;
 
 //PageFactory
-public class ProductCatalogue extends AbstractComponent {
+public class ProductCataloguePage extends AbstractComponent {
 
     WebDriver driver;
 
-    public ProductCatalogue(WebDriver driver){
+    public ProductCataloguePage(WebDriver driver){
         //initialization
         super(driver);
         this.driver = driver;
@@ -44,11 +44,12 @@ public class ProductCatalogue extends AbstractComponent {
         return prod;
     }
 
-    public void addProductToCart(String productName){
+    public void addProductToCart(String productName) throws InterruptedException {
         WebElement prod = getProductByName(productName);
         prod.findElement(addToCart).click();
         waitForElementToAppear(toastMessage);
-        waitForElementToDisappear(spinner);
+        //waitForElementToDisappear(spinner);
+        Thread.sleep(2000);
     }
 
 
