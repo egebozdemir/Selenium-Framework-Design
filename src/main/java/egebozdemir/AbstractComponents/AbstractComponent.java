@@ -24,11 +24,12 @@ public class AbstractComponent {
     //Elements (common for all pages, reusable)
     @FindBy(css = "[routerlink*='cart']")
     WebElement cartIconHeader;
-    By cartIcon = By.cssSelector("[routerlink*='cart']");
 
     @FindBy(css = "[routerlink*='myorders']")
     WebElement ordersHeader;
-    By ordersIcon = By.cssSelector("[routerlink*='myorders']");
+
+    By cartIconBy = By.cssSelector("[routerlink*='cart']");
+    By ordersIconBy = By.cssSelector("[routerlink*='myorders']");
 
     //Action Methods (common for all pages, reusable)
     public void waitForElementToAppear(By findBy){
@@ -52,14 +53,14 @@ public class AbstractComponent {
     }
 
     public CartPage goToCartPage(){
-        waitForElementToClick(cartIcon);
+        waitForElementToClick(cartIconBy);
         cartIconHeader.click();
         CartPage cartPage = new CartPage(driver);
         return cartPage;
     }
 
     public OrdersPage goToOrdersPage(){
-        waitForElementToClick(ordersIcon);
+        waitForElementToClick(ordersIconBy);
         ordersHeader.click();
         OrdersPage ordersPage = new OrdersPage(driver);
         return ordersPage;
