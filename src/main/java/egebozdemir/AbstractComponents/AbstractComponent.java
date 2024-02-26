@@ -1,6 +1,6 @@
 package egebozdemir.AbstractComponents;
 
-import egebozdemir.pageobjects.CartPage;
+import egebozdemir.PageObjects.CartPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -28,6 +28,11 @@ public class AbstractComponent {
     public void waitForElementToAppear(By findBy){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.visibilityOfElementLocated(findBy));
+    }
+
+    public void waitForElementToAppear(WebElement findBy){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.visibilityOf(findBy));
     }
 
     public void waitForElementToDisappear(WebElement element){

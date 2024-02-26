@@ -1,4 +1,4 @@
-package egebozdemir.pageobjects;
+package egebozdemir.PageObjects;
 
 import egebozdemir.AbstractComponents.AbstractComponent;
 import org.openqa.selenium.WebDriver;

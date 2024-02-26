@@ -1,4 +1,4 @@
-package egebozdemir.pageobjects;
+package egebozdemir.PageObjects;
 
 import egebozdemir.AbstractComponents.AbstractComponent;
 import org.openqa.selenium.WebDriver;
@@ -28,6 +28,9 @@ public class LandingPage extends AbstractComponent {
     @FindBy(id="login")
     WebElement loginBtn;
 
+    @FindBy(css="[class*='flyInOut")
+    WebElement errorMessage;
+
     //Action Methods
     public ProductCatalogue loginApplication(String email, String password){
         userEmail.sendKeys(email);
@@ -35,6 +38,11 @@ public class LandingPage extends AbstractComponent {
         loginBtn.click();
         ProductCatalogue productCatalogue = new ProductCatalogue(driver);
         return productCatalogue;
+    }
+
+    public String getErrorMessage(){
+        waitForElementToAppear(errorMessage);
+        return errorMessage.getText();
     }
 
     public void goTo(){
