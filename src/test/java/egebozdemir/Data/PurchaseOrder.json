@@ -1,0 +1,15 @@
+[
+  {
+    "userEmail": "ege@test.com",
+    "userPassword": "Test1234*",
+    "productName": "ZARA COAT 3",
+    "countryName": "tur"
+  },
+
+  {
+    "userEmail": "auto.ege@test.com",
+    "userPassword": "9876.Qwerty",
+    "productName": "ADIDAS ORIGINAL",
+    "countryName": "ind"
+  }
+]
