@@ -1,0 +1,10 @@
+[
+  {
+    "userEmail": "ege@test.com",
+    "incorrectUserEmail" : "asdf@qwerty.com",
+    "userPassword": "Test1234*",
+    "incorrectUserPassword" : "1234Qwerty*",
+    "productName": "ZARA COAT 3",
+    "incorrectProductName" : "ZARA COAT 4"
+  }
+]

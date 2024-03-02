@@ -2,11 +2,14 @@ package egebozdemir.Tests;
 
 import egebozdemir.TestComponents.BaseTest;
 import egebozdemir.PageObjects.*;
-import org.openqa.selenium.WebElement;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -14,11 +17,10 @@ import java.util.List;
 public class SubmitOrderTest extends BaseTest {
 
     @Test(dataProvider = "getData", groups = {"Purchase"})
-    public void submitOrder(HashMap<String,String> input) throws IOException, InterruptedException {
+    public void submitOrder(HashMap<String,String> input) throws InterruptedException {
         //login
         ProductCataloguePage productCataloguePage = landingPage.loginApplication(input.get("userEmail"), input.get("userPassword"));
         //grab products in catalogue page and add the one to cart
-        List<WebElement> products = productCataloguePage.getProductList();
         productCataloguePage.addProductToCart(input.get("productName"));
         //go to cart page, verify the product is added to cart and proceed to checkout
         CartPage cartPage = productCataloguePage.goToCartPage();
@@ -32,13 +34,21 @@ public class SubmitOrderTest extends BaseTest {
         Assert.assertTrue(confirmationMessage.equalsIgnoreCase("THANKYOU FOR THE ORDER."));
     }
 
-    @Test (dependsOnMethods = {"submitOrder"})
-    public void checkOrderHistory(String userEmail, String userPassword, String productName){
+    @Test (dataProvider = "getData",dependsOnMethods = {"submitOrder"})
+    public void checkOrderHistory(HashMap<String,String> input){
         //login
-        ProductCataloguePage productCataloguePage = landingPage.loginApplication(userEmail, userPassword);
+        ProductCataloguePage productCataloguePage = landingPage.loginApplication(input.get("userEmail"), input.get("userPassword"));
         //go to orders page and verify if the product is ordered
         OrdersPage ordersPage = productCataloguePage.goToOrdersPage();
-        Assert.assertTrue(ordersPage.verifyOrderDisplay(productName));
+        Assert.assertTrue(ordersPage.verifyOrderDisplay(input.get("productName")));
+    }
+
+    public String getScreenshot(String testCaseName) throws IOException {
+        TakesScreenshot ts = (TakesScreenshot) driver;
+        File source = ts.getScreenshotAs(OutputType.FILE);
+        File target = new File(System.getProperty("user.dir")+"/reports/"+testCaseName+".png");
+        FileUtils.copyFile(source, target);
+        return System.getProperty("user.dir")+"/reports/"+testCaseName+".png"; //returns the screenshot path
     }
 
     @DataProvider
@@ -56,7 +66,7 @@ public class SubmitOrderTest extends BaseTest {
         map2.put("productName", "ADIDAS ORIGINAL");
         map2.put("countryName", "ind");
 */
-        //calling getJsonDataToMap inherited from BaseTest to get List of Hashmaps
+        //calling getJsonDataToMap inherited from BaseTest to get List of Hashmaps as test data will be used in each run of the test
         List<HashMap<String,String>> data = getJsonDataToMap(System.getProperty("user.dir")+"/src/test/java/egebozdemir/Data/PurchaseOrder.json");
         return new Object[][] {{data.get(0)}, {data.get(1)}};
     }

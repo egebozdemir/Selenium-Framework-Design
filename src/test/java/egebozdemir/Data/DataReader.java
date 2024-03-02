@@ -12,6 +12,9 @@ import java.util.List;
 
 public class DataReader {
 
+    /*
+    //MOVED TO BASE TEST CLASS SINCE IT'S REUSED IN EACH TEST: FACTORY DESIGN PATTERN
+
     public List<HashMap<String, String>> getJsonDataToMap() throws IOException {
         //read json to string
         String jsonContent = FileUtils.readFileToString(new File(System.getProperty("user.dir")+"src/test/java/egebozdemir/Data/PurchaseOrder.json"), StandardCharsets.UTF_8);
@@ -21,4 +24,6 @@ public class DataReader {
         return data;
         //List {Hmap, Hmap}
     }
+    */
+
 }
