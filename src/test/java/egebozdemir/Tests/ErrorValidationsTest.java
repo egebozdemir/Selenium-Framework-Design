@@ -18,7 +18,14 @@ public class ErrorValidationsTest extends BaseTest {
     public void loginValidateError(HashMap<String,String> input) {
         //login with incorrect credentials and verify error message
         landingPage.loginApplication(input.get("incorrectUserEmail"), input.get("incorrectUserPassword"));
-        Assert.assertEquals("Incorrect email or password.", landingPage.getErrorMessage());
+        Assert.assertEquals( landingPage.getErrorMessage(),"Incorrect email or password.");
+    }
+
+    @Test(dataProvider = "getData", groups = {"ErrorHandling"})
+    public void loginValidateErrorFailed(HashMap<String,String> input) {
+        //login with incorrect credentials and verify error message
+        landingPage.loginApplication(input.get("incorrectUserEmail"), input.get("incorrectUserPassword"));
+        Assert.assertEquals(landingPage.getErrorMessage(),"INCORRECT ERROR MESSAGE TO MAKE TEST FAILED");
     }
 
     @Test(dataProvider = "getData", groups = {"ErrorHandling"})

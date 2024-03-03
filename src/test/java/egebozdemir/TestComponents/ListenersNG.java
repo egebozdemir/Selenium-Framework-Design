@@ -15,23 +15,25 @@ public class ListenersNG extends BaseTest implements ITestListener {
 
     ExtentTest test;
     ExtentReports extent = ExtentReporterNG.getReportObject();
+    ThreadLocal<ExtentTest> extentTest = new ThreadLocal<ExtentTest>(); //Thread safe (for parallel test execution)
 
     @Override
     public void onTestStart(ITestResult result) {
         ITestListener.super.onTestStart(result);
         test = extent.createTest(result.getMethod().getMethodName());
+        extentTest.set(test); //assign unique thread id of the test being executed
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
         ITestListener.super.onTestSuccess(result);
-        test.log(Status.PASS, "Test passed");
+        extentTest.get().log(Status.PASS, "Test passed");
     }
 
     @Override
     public void onTestFailure(ITestResult result) {
         ITestListener.super.onTestFailure(result);
-        test.fail(result.getThrowable());
+        extentTest.get().fail(result.getThrowable());
         //since driver object is instantiated in each of the test,
         //the driver alive inside each test class is given by the class level field of "driver"
         try {
@@ -46,7 +48,7 @@ public class ListenersNG extends BaseTest implements ITestListener {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        test.addScreenCaptureFromPath(ssPath, result.getMethod().getMethodName());
+        extentTest.get().addScreenCaptureFromPath(ssPath, result.getMethod().getMethodName());
     }
 
     @Override

@@ -60,6 +60,7 @@ public class BaseTest {
         return driver;
     }
 
+    //data reader
     public List<HashMap<String, String>> getJsonDataToMap(String filePath) throws IOException {
         //read json to string
         String jsonContent = FileUtils.readFileToString(new File(filePath), StandardCharsets.UTF_8);
@@ -70,12 +71,14 @@ public class BaseTest {
         //List {Hmap, Hmap}
     }
 
+    //take screenshot
     public String getScreenshot(String testCaseName, WebDriver driver) throws IOException {
         TakesScreenshot ts = (TakesScreenshot) driver;
         File source = ts.getScreenshotAs(OutputType.FILE);
         File target = new File(System.getProperty("user.dir")+"/reports/"+testCaseName+".png");
         FileUtils.copyFile(source, target);
-        return System.getProperty("user.dir")+"/reports/"+testCaseName+".png"; //returns the screenshot path
+        return testCaseName+".png"; //returns the screenshot path
+        // absolute path is changed to relative where the report is created to fix broken image on html
     }
 
     @BeforeMethod(alwaysRun = true)
